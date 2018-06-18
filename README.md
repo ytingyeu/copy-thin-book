@@ -25,6 +25,6 @@ Now supports doujinshi on Toranoana only.
 ## Install via Chrome Web Store
 **This extension is unlisted on Chrome Web Store since it hasn't been fully tested yet.**
 
-[Link] (https://chrome.google.com/webstore/detail/copy-thin-book/lpioakbgahcliooefppgddhbdgiapcak)
+[Link](https://chrome.google.com/webstore/detail/copy-thin-book/lpioakbgahcliooefppgddhbdgiapcak)
 
 
