@@ -16,14 +16,19 @@ function createQueryStr(shopName) {
   switch (shopName) {
     case "toranoana":
       queryStrTitle = "document.querySelector(\"meta[property='og:title']\").getAttribute(\"content\");"
-      queryStrAuthor = "document.querySelector(\"div.sub-name span.sub-p\").textContent;";
-      queryStrCircle = "document.querySelector(\"div.sub-circle span.sub-p\").textContent;";
-      queryStrPrice = "document.querySelector(\"div.price div.normal\").textContent;";
-      queryStrGenre = "document.querySelectorAll(\"table.detail4-spec span.infoorder-p\")[1].textContent;";
+      queryStrAuthor = "document.querySelector(\"div.sub-name span.sub-p\").innerText;";
+      queryStrCircle = "document.querySelector(\"div.sub-circle span.sub-p\").innerText;";
+      queryStrPrice = "document.querySelector(\"div.price div.normal\").innerText;";
+      queryStrGenre = "document.querySelectorAll(\"table.detail4-spec span.infoorder-p\")[1].innerText;";
       break;
 
 
     case "melonbooks":
+      queryStrTitle = "document.querySelectorAll(\"table.stripe tr.odd td\")[0].innerText;"
+      queryStrAuthor = "document.querySelectorAll(\"table.stripe tr.odd td\")[2].innerText;"
+      queryStrCircle = "document.querySelectorAll(\"table.stripe tr.odd td\")[1].innerText;"
+      queryStrPrice = "document.querySelector(\"td.price.txt_left\").innerText";
+      queryStrGenre = "document.querySelectorAll(\"table.stripe tr.odd td\")[3].innerText;"
       break;
   }
 
@@ -60,13 +65,20 @@ btn_copy.onclick = function () {
 
   bg.console.log('copy clicked');
 
-  var shopName = "toranoana";
-  var queryList = createQueryStr(shopName);
-
-  // get current tab
+  /* get current tab */
   chrome.tabs.query({ active: true }, async function (tabs) {
+
+    /* Initialize query string */
     var tab = tabs[0];
-    var queryStr;
+    var shopName;
+    var queryList;
+
+    if (tab.url.includes("toranoana")) {
+      shopName = "toranoana"
+    } else {
+      shopName = "melonbooks"
+    }
+    queryList = createQueryStr(shopName);
 
     /*=========== create promises for different fields ===========*/
     var getTitle = new Promise(function (resolve, reject) {
@@ -136,6 +148,7 @@ btn_copy.onclick = function () {
           }
         });
     });
+
     /*=================== End of promise area ===================*/
 
     // async process
@@ -149,12 +162,12 @@ btn_copy.onclick = function () {
       bg.console.log(err);
     }
 
-
     // clear price info, add tax
     var price;
     if (priceStr !== "price_not_found") {
       price = parseInt(priceStr.match(/[0-9 , \.]+/g)[0].replace(",", ""));
 
+      // Toranoana shows price before tax originally
       if (shopName === "toranoana") {
         price = Math.round(price * taxRate);
       }
