@@ -10,7 +10,7 @@ It then separates these attributes with tabs and copies to clipboard.
 You can then paste the attributes to any spreadsheet.
 
 Still this extension is under developing, it only supports:
-* Item type: **Doujinshi** only. This does NOT include Doujin CD/Game/Goods.
+* Item type: Doujinshi only. This does NOT include Doujin CD/Game/Goods.
 * Website:
  [Toranoana](https://www.toranoana.jp/),
  [Melonbooks](https://www.melonbooks.co.jp/)
@@ -30,4 +30,5 @@ or via [Chrome Web Store](https://chrome.google.com/webstore/detail/copy-thin-bo
 **Notice: this extension is unlisted on Chrome Web Store since it hasn't been fully tested yet.**
 
 ### How to use?
-Under a page of a certain book, click the icon and then click the popup button `Copy`. The popup window should be closed once the copy success.
+Under a page of a certain book, click the icon and then click the popup button `Copy`. 
+The popup window should be closed once the copy successes.
