@@ -5,7 +5,7 @@ const bg = chrome.extension.getBackgroundPage();
 /* Create qurey string for different attributes and shop */
 function createQueryStr(shopName) {
 
-  bg.console.log("createQueryStr");
+  //bg.console.log("createQueryStr");
 
   var queryStrTitle;
   var queryStrAuthor;
@@ -44,8 +44,8 @@ function createQueryStr(shopName) {
 }
 
 function copyToClipboard(str) {
-  bg.console.log('copyToClipboard');
-  bg.console.log(str);
+  //bg.console.log('copyToClipboard');
+  //bg.console.log(str);
 
   // create a new element and append it to DOM
   const el = document.createElement('textarea');
@@ -63,7 +63,7 @@ function copyToClipboard(str) {
 
 btn_copy.onclick = function () {
 
-  bg.console.log('copy clicked');
+  //bg.console.log('copy clicked');
 
   /* get current tab */
   chrome.tabs.query({ active: true }, async function (tabs) {
@@ -73,6 +73,17 @@ btn_copy.onclick = function () {
     var shopName;
     var queryList;
 
+    // get the type of the product
+    var prodType = document.getElementsByName("prod-type");
+    var prodTypeText;
+    for (var i = 0; i < prodType.length; i++) {
+      if (prodType[i].checked) {
+        prodTypeText = prodType[i].value;
+      }
+    }
+    //bg.console.log(prodTypeText);
+
+    // get the shop name for differnet query strings
     if (tab.url.includes("toranoana")) {
       shopName = "toranoana"
     } else {
@@ -80,9 +91,11 @@ btn_copy.onclick = function () {
     }
     queryList = createQueryStr(shopName);
 
+
     /*=========== create promises for different fields ===========*/
+
     var getTitle = new Promise(function (resolve, reject) {
-      bg.console.log('getTitle');
+      //bg.console.log('getTitle');
 
       chrome.tabs.executeScript(
         tab.id, { code: queryList["queryTitle"] },
@@ -96,7 +109,7 @@ btn_copy.onclick = function () {
     });
 
     var getAuthorName = new Promise(function (resolve) {
-      bg.console.log('getAuthorName');
+      //bg.console.log('getAuthorName');
 
       chrome.tabs.executeScript(
         tab.id, { code: queryList["queryAuthor"] },
@@ -110,7 +123,7 @@ btn_copy.onclick = function () {
     });
 
     var getCircleName = new Promise(function (resolve) {
-      bg.console.log('getCircleName');
+      //bg.console.log('getCircleName');
 
       chrome.tabs.executeScript(
         tab.id, { code: queryList["queryCircle"] },
@@ -124,7 +137,7 @@ btn_copy.onclick = function () {
     });
 
     var getPrice = new Promise(function (resolve) {
-      bg.console.log('getPrice');
+      //bg.console.log('getPrice');
       chrome.tabs.executeScript(
         tab.id, { code: queryList["queryPrice"] },
         function (results) {
@@ -137,7 +150,7 @@ btn_copy.onclick = function () {
     });
 
     var getGenre = new Promise(function (resolve) {
-      bg.console.log('getGenre');
+      //bg.console.log('getGenre');
       chrome.tabs.executeScript(
         tab.id, { code: queryList["queryGenre"] },
         function (results) {
@@ -159,7 +172,7 @@ btn_copy.onclick = function () {
       var priceStr = await getPrice;
       var genre = await getGenre;
     } catch (err) {
-      bg.console.log(err);
+      //bg.console.log(err);
     }
 
     // clear price info, add tax

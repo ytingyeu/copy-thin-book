@@ -1,7 +1,7 @@
   {
-    "name": "copy-thin-book",
-    "version": "1.0.7",
-    "description": "Copy the info of a thin book from Toranoana online shop.",
+    "name": "copy-thin-book-dev",
+    "version": "1.1.1",
+    "description": "Copy the information of a Doujinshi from online Doujinshi shop.",
     "permissions": ["activeTab", "declarativeContent",  "clipboardWrite", "<all_urls>"],
     "background": {
       "scripts": ["background.js"],
