@@ -142,7 +142,7 @@ btn_copy.onclick = function () {
       Promise.all([getTitle, getAuthorName, getCircleName, getPrice, getGenre]).then(
         function ([book_title, author_name, circle_name, priceStr, genre]) {
 
-          bg.console.log(book_title, author_name, circle_name, priceStr, genre)
+          //bg.console.log(book_title, author_name, circle_name, priceStr, genre)
 
           // clear price info, add tax
           if (priceStr !== "price_not_found") {
@@ -158,21 +158,15 @@ btn_copy.onclick = function () {
 
           // create copied string and pass to copy func
           //let copyStr = book_title + '\t' + circle_name + '\t' +  author_name + '\t' + price + '\t' + genre + '\t' + tab.url;
-          let copyStr = book_title + '\t' + circle_name + '\t' + author_name + '\t' + genre + '\t' + tab.url;         
+          let copyStr = book_title + '\t' + circle_name + '\t' + author_name + '\t' + genre + '\t' + tab.url;
           copyToClipboard(copyStr);
 
         }
       )
 
     } catch (err) {
-      bg.console.log(err);
+      //bg.console.log(err);
     }
-
-
-    // create copied string and pass to copy func
-          //let copyStr = book_title + '\t' + circle_name + '\t' +  author_name + '\t' + price + '\t' + genre + '\t' + tab.url;
-          let copyStr = book_title + '\t' + circle_name + '\t' + author_name + '\t' + genre + '\t' + tab.url;         
-          copyToClipboard(copyStr);
 
     // close popup
     window.close();
