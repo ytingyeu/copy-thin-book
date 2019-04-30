@@ -27,14 +27,14 @@ btn_copy.onclick = function () {
   chrome.tabs.query({ active: true }, async function (tabs) {
 
     /* Initialize query string */
-    var tab = tabs[0];
-    var shopName;
-    var queryList;
+    let tab = tabs[0];
+    let shopName;
+    let queryList;
 
     // get the type of the product
-    var prodType = document.getElementsByName("prod-type");
-    var prodTypeText;
-    for (var i = 0; i < prodType.length; i++) {
+    let prodType = document.getElementsByName("prod-type");
+    let prodTypeText;
+    for (let i = 0; i < prodType.length; i++) {
       if (prodType[i].checked) {
         prodTypeText = prodType[i].value;
       }
@@ -52,7 +52,7 @@ btn_copy.onclick = function () {
 
     /*=========== create promises for different fields ===========*/
 
-    var getTitle = new Promise(function (resolve, reject) {
+    let getTitle = new Promise(function (resolve, reject) {
       //bg.console.log('getTitle');
 
       chrome.tabs.executeScript(
@@ -66,7 +66,7 @@ btn_copy.onclick = function () {
         });
     });
 
-    var getAuthorName = new Promise(function (resolve) {
+    let getAuthorName = new Promise(function (resolve) {
       //bg.console.log('getAuthorName');
 
       chrome.tabs.executeScript(
@@ -80,7 +80,7 @@ btn_copy.onclick = function () {
         });
     });
 
-    var getCircleName = new Promise(function (resolve) {
+    let getCircleName = new Promise(function (resolve) {
       //bg.console.log('getCircleName');
 
       chrome.tabs.executeScript(
@@ -94,7 +94,7 @@ btn_copy.onclick = function () {
         });
     });
 
-    var getPrice = new Promise(function (resolve) {
+    let getPrice = new Promise(function (resolve) {
       //bg.console.log('getPrice');
       chrome.tabs.executeScript(
         tab.id, { code: queryList["queryPrice"] },
@@ -107,7 +107,7 @@ btn_copy.onclick = function () {
         });
     });
 
-    var getGenre = new Promise(function (resolve) {
+    let getGenre = new Promise(function (resolve) {
       //bg.console.log('getGenre');
       chrome.tabs.executeScript(
         tab.id, { code: queryList["queryGenre"] },
@@ -120,35 +120,59 @@ btn_copy.onclick = function () {
         });
     });
 
+    /*let getDate = new Promise(function (resolve) {
+      //bg.console.log('getGenre');
+      chrome.tabs.executeScript(
+        tab.id, { code: queryList["queryDate"] },
+        function (results) {
+          if (results[0] == null) {
+            resolve("genre_not_found");
+          } else {
+            resolve(results[0]);
+          }
+        });
+    });*/
     /*=================== End of promise area ===================*/
+
+    let book_title, author_name, circle_name, priceStr, price, genre;
 
     // async process
     try {
-      var book_title = await getTitle;
-      //var author_name = await getAuthorName;
-      var circle_name = await getCircleName;
-      var priceStr = await getPrice;
-      var genre = await getGenre;
+
+      Promise.all([getTitle, getAuthorName, getCircleName, getPrice, getGenre]).then(
+        function ([book_title, author_name, circle_name, priceStr, genre]) {
+
+          bg.console.log(book_title, author_name, circle_name, priceStr, genre)
+
+          // clear price info, add tax
+          if (priceStr !== "price_not_found") {
+            price = parseInt(priceStr.match(/[0-9 , \.]+/g)[0].replace(",", ""));
+
+            // Toranoana shows price before tax originally
+            if (shopName === "toranoana") {
+              price = Math.round(price * taxRate);
+            }
+          } else {
+            price = priceStr;
+          }
+
+          // create copied string and pass to copy func
+          //let copyStr = book_title + '\t' + circle_name + '\t' +  author_name + '\t' + price + '\t' + genre + '\t' + tab.url;
+          let copyStr = book_title + '\t' + circle_name + '\t' + author_name + '\t' + genre + '\t' + tab.url;         
+          copyToClipboard(copyStr);
+
+        }
+      )
+
     } catch (err) {
-      //bg.console.log(err);
+      bg.console.log(err);
     }
 
-    // clear price info, add tax
-    var price;
-    if (priceStr !== "price_not_found") {
-      price = parseInt(priceStr.match(/[0-9 , \.]+/g)[0].replace(",", ""));
-
-      // Toranoana shows price before tax originally
-      if (shopName === "toranoana") {
-        price = Math.round(price * taxRate);
-      }
-    } else {
-      price = priceStr;
-    }
 
     // create copied string and pass to copy func
-    var copyStr = book_title + '\t' + circle_name + '\t' + price + '\t' + genre + '\t' + tab.url;
-    copyToClipboard(copyStr);
+          //let copyStr = book_title + '\t' + circle_name + '\t' +  author_name + '\t' + price + '\t' + genre + '\t' + tab.url;
+          let copyStr = book_title + '\t' + circle_name + '\t' + author_name + '\t' + genre + '\t' + tab.url;         
+          copyToClipboard(copyStr);
 
     // close popup
     window.close();
