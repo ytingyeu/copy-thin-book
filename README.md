@@ -18,16 +18,17 @@ Still this extension is under developing, it only supports:
 ## Usage
 
 ### Installation
-via Unpacked Extension:
 
-1. Download project and decompress
-2. On Chrome, access `chrome://extensions` and turn on Developer mode.
-3. Click `Install Unpacked Extensions` and select the project folder.
-4. Click refresh icon to reload the extension once the source code is modified.
+* via [Chrome Web Store](https://chrome.google.com/webstore/detail/copy-thin-book/lpioakbgahcliooefppgddhbdgiapcak)
 
-or via [Chrome Web Store](https://chrome.google.com/webstore/detail/copy-thin-book/lpioakbgahcliooefppgddhbdgiapcak)
+* via Unpacked Extension:
 
-**Notice: this extension is unlisted on Chrome Web Store since it hasn't been fully tested yet.**
+    1. Download project and decompress
+    2. On Chrome, access `chrome://extensions` and turn on Developer mode.
+    3. Click `Install Unpacked Extensions` and select the project folder.
+    4. Click refresh icon to reload the extension once the source code is modified.
+
+
 
 ### How to use?
 Under a page of a certain book, click the icon and then click the popup button `Copy`. 
