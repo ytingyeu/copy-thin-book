@@ -31,7 +31,9 @@ btn_copy.onclick = function () {
     let shopName;
     let queryList;
 
+    /* TO-DO */
     // get the type of the product
+    /*
     let prodType = document.getElementsByName("prod-type");
     let prodTypeText;
     for (let i = 0; i < prodType.length; i++) {
@@ -39,7 +41,7 @@ btn_copy.onclick = function () {
         prodTypeText = prodType[i].value;
       }
     }
-    //bg.console.log(prodTypeText);
+    */
 
     // get the shop name for differnet query strings
     if (tab.url.includes("toranoana")) {
