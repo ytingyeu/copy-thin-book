@@ -159,8 +159,8 @@ btn_copy.onclick = function () {
           }
 
           // create copied string and pass to copy func
-          //let copyStr = book_title + '\t' + circle_name + '\t' +  author_name + '\t' + price + '\t' + genre + '\t' + tab.url;
-          let copyStr = book_title + '\t' + circle_name + '\t' + author_name + '\t' + genre + '\t' + tab.url;
+          let copyStr = book_title + '\t' + circle_name + '\t' + price + '\t' + genre + '\t' + tab.url;
+          //let copyStr = book_title + '\t' + circle_name + '\t' + author_name + '\t' + genre + '\t' + tab.url;
           copyToClipboard(copyStr);
 
         }
