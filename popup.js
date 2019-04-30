@@ -3,7 +3,7 @@ const bg = chrome.extension.getBackgroundPage();
 
 function copyToClipboard(str) {
   //bg.console.log('copyToClipboard');
-  //bg.console.log(str);
+  bg.console.log(str);
 
   // create a new element and append it to DOM
   const el = document.createElement('textarea');
@@ -24,7 +24,7 @@ btn_copy.onclick = function () {
   //bg.console.log('copy clicked');
 
   /* get current tab */
-  chrome.tabs.query({ active: true }, async function (tabs) {
+  chrome.tabs.query({ active: true, currentWindow: true }, async function (tabs) {
 
     /* Initialize query string */
     let tab = tabs[0];
@@ -45,9 +45,9 @@ btn_copy.onclick = function () {
 
     // get the shop name for differnet query strings
     if (tab.url.includes("toranoana")) {
-      shopName = "toranoana"
+      shopName = "toranoana";
     } else {
-      shopName = "melonbooks"
+      shopName = "melonbooks";
     }
     queryList = createQueryStr(shopName);
 
@@ -97,7 +97,7 @@ btn_copy.onclick = function () {
     });
 
     let getPrice = new Promise(function (resolve) {
-      //bg.console.log('getPrice');
+      bg.console.log('getPrice');
       chrome.tabs.executeScript(
         tab.id, { code: queryList["queryPrice"] },
         function (results) {
@@ -123,7 +123,7 @@ btn_copy.onclick = function () {
     });
 
     /*let getDate = new Promise(function (resolve) {
-      //bg.console.log('getGenre');
+      //bg.console.log('getDate');
       chrome.tabs.executeScript(
         tab.id, { code: queryList["queryDate"] },
         function (results) {
@@ -136,38 +136,36 @@ btn_copy.onclick = function () {
     });*/
     /*=================== End of promise area ===================*/
 
-    let book_title, author_name, circle_name, priceStr, price, genre;
+
 
     // async process
     try {
 
-      Promise.all([getTitle, getAuthorName, getCircleName, getPrice, getGenre]).then(
-        function ([book_title, author_name, circle_name, priceStr, genre]) {
+      let book_title = await getTitle;
+      //let author_name = await getAuthorName
+      let circle_name = await getCircleName;
+      let priceStr = await getPrice;
+      let genre = await getGenre;
 
-          //bg.console.log(book_title, author_name, circle_name, priceStr, genre)
+      // clear price info, add tax
+      if (priceStr !== "price_not_found") {
+        price = parseInt(priceStr.match(/[0-9 , \.]+/g)[0].replace(",", ""));
 
-          // clear price info, add tax
-          if (priceStr !== "price_not_found") {
-            price = parseInt(priceStr.match(/[0-9 , \.]+/g)[0].replace(",", ""));
-
-            // Toranoana shows price before tax originally
-            if (shopName === "toranoana") {
-              price = Math.round(price * taxRate);
-            }
-          } else {
-            price = priceStr;
-          }
-
-          // create copied string and pass to copy func
-          let copyStr = book_title + '\t' + circle_name + '\t' + price + '\t' + genre + '\t' + tab.url;
-          //let copyStr = book_title + '\t' + circle_name + '\t' + author_name + '\t' + genre + '\t' + tab.url;
-          copyToClipboard(copyStr);
-
+        // Toranoana shows price before tax originally
+        if (shopName === "toranoana") {
+          price = Math.round(price * taxRate);
         }
-      )
+      } else {
+        price = priceStr;
+      }
+
+      // create copied string and pass to copy func
+      let copyStr = book_title + '\t' + circle_name + '\t' + price + '\t' + genre + '\t' + tab.url;
+      //let copyStr = book_title + '\t' + circle_name + '\t' + author_name + '\t' + genre + '\t' + tab.url;
+      copyToClipboard(copyStr);
 
     } catch (err) {
-      //bg.console.log(err);
+      bg.console.log(err);
     }
 
     // close popup
