@@ -1,6 +1,6 @@
   {
     "name": "copy-thin-book",
-    "version": "1.2.0",
+    "version": "1.3.1",
     "description": "Copy the information of a Doujinshi from online Doujinshi shop.",
     "permissions": ["activeTab", "declarativeContent",  "clipboardWrite", "<all_urls>"],
     "background": {

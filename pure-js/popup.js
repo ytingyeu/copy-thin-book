@@ -3,7 +3,7 @@ const bg = chrome.extension.getBackgroundPage();
 
 function copyToClipboard(str) {
   //bg.console.log('copyToClipboard');
-  bg.console.log(str);
+  //bg.console.log(str);
 
   // create a new element and append it to DOM
   const el = document.createElement('textarea');
@@ -97,7 +97,7 @@ btn_copy.onclick = function () {
     });
 
     let getPrice = new Promise(function (resolve) {
-      bg.console.log('getPrice');
+      //bg.console.log('getPrice');
       chrome.tabs.executeScript(
         tab.id, { code: queryList["queryPrice"] },
         function (results) {
@@ -165,7 +165,10 @@ btn_copy.onclick = function () {
       copyToClipboard(copyStr);
 
     } catch (err) {
-      bg.console.log(err);
+      if (bg) {
+        bg.console.log(err);
+      }
+
     }
 
     // close popup
