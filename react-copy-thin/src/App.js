@@ -1,11 +1,13 @@
 /* global chrome */
 import React from 'react';
-import { MDBBtn } from "mdbreact";
+import { MDBIcon } from "mdbreact";
 
 import MainPage from 'components/MainPage/MainPage';
-import ConfigPage from 'components/MainPage/MainPage';
+import ConfigPage from 'components/ConfigPage/ConfigPage';
 
 import './App.css';
+
+const bg = chrome.extension.getBackgroundPage();
 
 class App extends React.Component {
 
@@ -18,12 +20,16 @@ class App extends React.Component {
   }
 
 
-  getConfigPage = () => {
-    return (
-      <div>
-        <h1>config</h1>
-      </div>
-    );
+  pageSwitch = () => {
+    switch (this.state.page) {
+      case "main":
+        this.setState({ page: "config" })
+        break;
+
+      case "config":
+        this.setState({ page: "main" })
+        break;
+    }
   }
 
   render() {
@@ -40,11 +46,11 @@ class App extends React.Component {
         break;
     }
 
-    console.log("here");
+
     return (
-      
+
       <div>
-        <MDBBtn color="primary" onClick={() => this.setState({page: "config"})}>Primary</MDBBtn>
+        <MDBIcon icon="cogs" onClick={() => this.pageSwitch()}/>
         {page}
       </div>
     );

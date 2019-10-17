@@ -8,3 +8,4 @@ export function getCurrentTab(callback) {
         callback(tabs[0]);
     });
 }
+

@@ -1,37 +1,37 @@
 /* global chrome */
 import React from 'react';
-
-import {getCurrentTab} from "commons/Utils";
-
-import logo from 'images/copy_thin_book128.png';
+import { MDBBtn } from "mdbreact";
+import { getCurrentTab } from "commons/Utils";
 
 const bg = chrome.extension.getBackgroundPage();
 
 class MainPage extends React.Component {
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      shopName: null
+    }
+  }
+
   componentDidMount() {
     getCurrentTab((tab) => {
       bg.console.log(tab);
+
+      if (tab.url.includes("toranoana")) {
+        this.setState({ shopName: "tora" });
+      } else {
+        this.setState({ shopName: "melon" });
+      }
     })
   }
 
   render() {
-    return (<div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-          </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-          </a>
-      </header>
-    </div>);
+    return (
+      <div>
+        <MDBBtn color="elegant">Copy to Clipboard</MDBBtn>
+      </div>);
   }
 
 }

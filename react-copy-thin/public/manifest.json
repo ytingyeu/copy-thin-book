@@ -4,16 +4,14 @@
     "name": "copy-thin-book",
     "description": "Copy the information of a Doujinshi from online Doujinshi shop.",
     "version": "2.0.0",
-    "permissions": [
-        "webRequest",
-        "*://developer.mozilla.org/",
+    "permissions": [        
         "activeTab",
         "declarativeContent",
         "clipboardWrite",
         "<all_urls>"
     ],
 
-    "browser_action": {
+    "page_action": {
         "default_popup": "index.html",
         "default_title": "Open the popup"
     },
