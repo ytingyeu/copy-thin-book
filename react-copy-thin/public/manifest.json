@@ -1,20 +1,32 @@
 {
-  "manifest_version": 2,
+    "manifest_version": 2,
 
-  "name": "My Extension",
-  "description": "This extension is a starting point to create a real Chrome extension",
-  "version": "0.0.1",
+    "name": "copy-thin-book",
+    "description": "Copy the information of a Doujinshi from online Doujinshi shop.",
+    "version": "2.0.0",
+    "permissions": [
+        "webRequest",
+        "*://developer.mozilla.org/",
+        "activeTab",
+        "declarativeContent",
+        "clipboardWrite",
+        "<all_urls>"
+    ],
 
-  "browser_action": {
-    "default_popup": "index.html",
-    "default_title": "Open the popup"
-  },
-  "icons": {
-    "16": "logo192.png",
-    "48": "logo192.png",
-    "128": "logo192.png"
-  },
-  "content_security_policy": "script-src 'self' 'sha256-E6FZpRkVs7okAqOweStdbf2mmW599p+2P3QuZDQBFpo='; object-src 'self'", 
-  "permissions": [
-  ]
+    "browser_action": {
+        "default_popup": "index.html",
+        "default_title": "Open the popup"
+    },
+
+    "background": {
+        "scripts": ["app/background.js"]
+    },
+
+    "icons": {
+        "16": "images/copy_thin_book16.png",
+        "32": "images/copy_thin_book32.png",
+        "48": "images/copy_thin_book48.png",
+        "128": "images/copy_thin_book128.png"
+    },
+    "content_security_policy": "script-src 'self' 'sha256-E6FZpRkVs7okAqOweStdbf2mmW599p+2P3QuZDQBFpo='; object-src 'self'"
 }

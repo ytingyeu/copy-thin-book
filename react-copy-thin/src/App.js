@@ -1,8 +1,11 @@
+/* global chrome */
 import React from 'react';
-import logo from './images/copy_thin_book128.png';
-// import logo from './logo.svg';
-import './App.css';
+import { MDBBtn } from "mdbreact";
 
+import MainPage from 'components/MainPage/MainPage';
+import ConfigPage from 'components/MainPage/MainPage';
+
+import './App.css';
 
 class App extends React.Component {
 
@@ -10,27 +13,39 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      configMode: false
+      page: "main"
     }
   }
 
-  render() {
+
+  getConfigPage = () => {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <div>
+        <h1>config</h1>
+      </div>
+    );
+  }
+
+  render() {
+
+    let page = null;
+
+    switch (this.state.page) {
+      case "main":
+        page = <MainPage />;
+        break;
+
+      case "config":
+        page = <ConfigPage />;
+        break;
+    }
+
+    console.log("here");
+    return (
+      
+      <div>
+        <MDBBtn color="primary" onClick={() => this.setState({page: "config"})}>Primary</MDBBtn>
+        {page}
       </div>
     );
   }
