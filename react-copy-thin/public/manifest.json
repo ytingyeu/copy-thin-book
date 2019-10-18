@@ -8,7 +8,8 @@
         "activeTab",
         "declarativeContent",
         "clipboardWrite",
-        "<all_urls>"
+        "<all_urls>",
+        "storage"
     ],
 
     "page_action": {
@@ -20,11 +21,13 @@
         "scripts": ["app/background.js"]
     },
 
+    "options_page": "options.html",
+
     "icons": {
-        "16": "images/copy_thin_book16.png",
-        "32": "images/copy_thin_book32.png",
-        "48": "images/copy_thin_book48.png",
-        "128": "images/copy_thin_book128.png"
+        "16": "icons/copy_thin_book16.png",
+        "32": "icons/copy_thin_book32.png",
+        "48": "icons/copy_thin_book48.png",
+        "128": "icons/copy_thin_book128.png"
     },
     "content_security_policy": "script-src 'self' 'sha256-E6FZpRkVs7okAqOweStdbf2mmW599p+2P3QuZDQBFpo='; object-src 'self'"
 }
