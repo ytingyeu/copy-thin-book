@@ -21,7 +21,7 @@
         "scripts": ["app/background.js"]
     },
 
-    "options_page": "options.html",
+    "options_page": "OptionPage/options.html",
 
     "icons": {
         "16": "icons/copy_thin_book16.png",
