@@ -1,6 +1,6 @@
 /* global chrome */
 import React from 'react';
-import { MDBBtn } from "mdbreact";
+import { MDBBtn, MDBIcon } from "mdbreact";
 import { getCurrentTab } from "commons/Utils";
 
 const bg = chrome.extension.getBackgroundPage();
@@ -30,7 +30,9 @@ class MainPage extends React.Component {
   render() {
     return (
       <div>
-        <MDBBtn color="elegant">Copy to Clipboard</MDBBtn>
+        <MDBBtn gradient="blue" >
+          <MDBIcon icon="copy" size="5x" />
+        </MDBBtn>
       </div>);
   }
 

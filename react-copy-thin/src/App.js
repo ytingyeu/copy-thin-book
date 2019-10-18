@@ -1,6 +1,6 @@
 /* global chrome */
 import React from 'react';
-import { MDBIcon } from "mdbreact";
+import { MDBBtn, MDBIcon } from "mdbreact";
 
 import MainPage from 'components/MainPage/MainPage';
 import ConfigPage from 'components/ConfigPage/ConfigPage';
@@ -32,6 +32,16 @@ class App extends React.Component {
     }
   }
 
+  openOptions = () => {
+    if (chrome.runtime.openOptionsPage) {
+      chrome.runtime.openOptionsPage();
+    } else {
+      window.open(chrome.runtime.getURL('options.html'));
+    }
+
+    bg.console.log(chrome.runtime.openOptionsPage);
+  }
+
   render() {
 
     let page = null;
@@ -49,9 +59,15 @@ class App extends React.Component {
 
     return (
 
-      <div>
-        <MDBIcon icon="cogs" onClick={() => this.pageSwitch()}/>
-        {page}
+      <div className="app-container">
+        <div className="toobar">
+          {/* <MDBBtn size="sm" gradient="blue" onClick={() => this.openOptions()} className="btn-icon"> */}
+            <a><MDBIcon icon="cog" size="2x" onClick={() => this.openOptions()} className="icon-config"/></a>
+          {/* </MDBBtn> */}
+        </div>
+        <div className="page-container">
+          {page}
+        </div>
       </div>
     );
   }
