@@ -12,7 +12,8 @@ class MainPage extends React.Component {
     super(props);
 
     this.state = {
-      shopName: null
+      shopName: null,
+      tab: null
     }
   }
 
@@ -20,17 +21,22 @@ class MainPage extends React.Component {
     getCurrentTab((tab) => {
       bg.console.log(tab);
 
+      this.setState({tab: tab});
+
       if (tab.url.includes("toranoana")) {
-        this.setState({ shopName: "tora" });
+        this.setState({ shopName: "toranoana" });
       } else {
-        this.setState({ shopName: "melon" });
+        this.setState({ shopName: "melonbooks" });
       }
     })
   }
 
-  handleCopy = () => {
+  handleCopy = async () => {
+
+    bg.console.log("handleCopy()");
+
     let queryList = createQueryStr(this.state.shopName);
-    let promiseList = createQueryPromises(queryList);
+    let promiseList = createQueryPromises(this.state.tab, queryList);
 
     try {
 
@@ -41,11 +47,11 @@ class MainPage extends React.Component {
       // let priceStr = await promiseList.getPrice;
       // let genre = await promiseList.getGenre;
 
-      console.log([bookTitle, authorName, circleName, priceStr, genre]);
+      bg.console.log([bookTitle, authorName, circleName, priceStr, genre]);
 
     }
     catch(err) {
-      console.error(err);
+      bg.console.error(err);
     }
   }
 

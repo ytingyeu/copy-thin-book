@@ -3,13 +3,13 @@
 /* Create qurey string for different attributes and shop */
 export function createQueryStr(shopName) {
 
-  //bg.console.log("createQueryStr");
+  // bg.console.log("createQueryStr");
 
-  var queryStrTitle;
-  var queryStrAuthor;
-  var queryStrCircle;
-  var queryStrPrice;
-  var queryStrGenre;
+  let queryStrTitle;
+  let queryStrAuthor;
+  let queryStrCircle;
+  let queryStrPrice;
+  let queryStrGenre;
 
   switch (shopName) {
     case "toranoana":
@@ -30,7 +30,7 @@ export function createQueryStr(shopName) {
       break;
   }
 
-  var queryList = {
+  let queryList = {
     "queryTitle": queryStrTitle,
     "queryAuthor": queryStrAuthor,
     "queryCircle": queryStrCircle,
@@ -42,7 +42,7 @@ export function createQueryStr(shopName) {
 }
 
 
-export function createQueryPromises(queryList) {
+export function createQueryPromises(tab, queryList) {
   /*=========== create promises for different fields ===========*/
 
   const getTitle = new Promise(function (resolve, reject) {
@@ -113,13 +113,15 @@ export function createQueryPromises(queryList) {
       });
   });
 
-  const retList = {
-    "getTitle": getTitle, 
-    "getAuthorName": getAuthorName, 
-    "getCircleName": getCircleName,
-    "getPrice": getPrice, 
-    "getGenre": getGenre
-  }
+  // const promiseList = {
+  //   "getTitle": getTitle, 
+  //   "getAuthorName": getAuthorName, 
+  //   "getCircleName": getCircleName,
+  //   "getPrice": getPrice, 
+  //   "getGenre": getGenre
+  // }
 
-  return retList
+  const promiseList = [getTitle, getAuthorName, getCircleName, getPrice, getGenre];
+
+  return promiseList;
 }
