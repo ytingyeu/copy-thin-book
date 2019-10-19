@@ -5,6 +5,7 @@ import { getCurrentTab, copyToClipboard } from "commons/Utils";
 import { createQueryStr, createQueryPromises } from "commons/QueryFuncs";
 
 const bg = chrome.extension.getBackgroundPage();
+const taxRate = 1.1;
 
 class MainPage extends React.Component {
 
@@ -22,7 +23,7 @@ class MainPage extends React.Component {
     getCurrentTab((tab) => {
       bg.console.log(tab);
 
-      this.setState({tab: tab});
+      this.setState({ tab: tab });
 
       if (tab.url.includes("toranoana")) {
         this.setState({ shopName: "toranoana" });
@@ -36,28 +37,36 @@ class MainPage extends React.Component {
 
     bg.console.log("handleCopy()");
 
+    let price;
     let queryList = createQueryStr(this.state.shopName);
     let promiseList = createQueryPromises(this.state.tab, queryList);
 
     try {
 
       const [bookTitle, authorName, circleName, priceStr, genre] = await Promise.all(promiseList);
-      // let book_title = await promiseList.getTitle;
-      // let author_name = await promiseList.getAuthorName
-      // let circle_name = await promiseList.getCircleName;
-      // let priceStr = await promiseList.getPrice;
-      // let genre = await promiseList.getGenre;
 
-      bg.console.log([bookTitle, authorName, circleName, priceStr, genre]);
+      // clear price info, add tax
+      if (priceStr !== "price_not_found") {
+        price = parseInt(priceStr.match(/[0-9 , \.]+/g)[0].replace(",", ""));
 
-      this.setState({status: "Success!"})
+        // Toranoana shows price before tax originally
+        if (shopName === "toranoana") {
+          price = Math.round(price * taxRate);
+        }
+      } else {
+        price = priceStr;
+      }
+
+      bg.console.log([bookTitle, authorName, circleName, price, genre]);
+
+      this.setState({ status: "Success!" })
 
       setTimeout(() => {
         this.setState({ status: "" });
       }, 2000);
 
     }
-    catch(err) {
+    catch (err) {
       bg.console.error(err);
     }
   }
