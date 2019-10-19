@@ -12,8 +12,9 @@ class MainPage extends React.Component {
     super(props);
 
     this.state = {
-      shopName: null,
-      tab: null
+      shopName: "",
+      tab: null,
+      status: ""
     }
   }
 
@@ -49,6 +50,12 @@ class MainPage extends React.Component {
 
       bg.console.log([bookTitle, authorName, circleName, priceStr, genre]);
 
+      this.setState({status: "Success!"})
+
+      setTimeout(() => {
+        this.setState({ status: "" });
+      }, 2000);
+
     }
     catch(err) {
       bg.console.error(err);
@@ -61,6 +68,7 @@ class MainPage extends React.Component {
         <MDBBtn gradient="blue" >
           <MDBIcon icon="copy" size="5x" onClick={() => { this.handleCopy() }} />
         </MDBBtn>
+        <p id="status">{this.state.status}</p>
       </div>);
   }
 
