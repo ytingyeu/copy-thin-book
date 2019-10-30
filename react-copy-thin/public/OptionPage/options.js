@@ -5,12 +5,12 @@ $("#sortable").sortable({
 const defaultOrder = ["0","1","2","3","4","5"];
 
 const defaultHtml = 
-'<li class="list-group-item ui-sortable-handle" id="0">title</li>' +
-'<li class="list-group-item ui-sortable-handle" id="1">author</li>' +
-'<li class="list-group-item ui-sortable-handle" id="2">circle</li>' +
-'<li class="list-group-item ui-sortable-handle" id="3">price</li>' +
-'<li class="list-group-item ui-sortable-handle" id="4">genre</li>' +
-'<li class="list-group-item ui-sortable-handle" id="5">url</li>'
+'<li class="list-group-item ui-sortable-handle" id="a">title</li>' +
+'<li class="list-group-item ui-sortable-handle" id="b">author</li>' +
+'<li class="list-group-item ui-sortable-handle" id="c">circle</li>' +
+'<li class="list-group-item ui-sortable-handle" id="d">price</li>' +
+'<li class="list-group-item ui-sortable-handle" id="e">genre</li>' +
+'<li class="list-group-item ui-sortable-handle" id="f">url</li>'
 
 const numToName = {
     "0": "title",
@@ -37,16 +37,16 @@ function saveOptions() {
 
     let newOrder = $("#sortable").sortable("toArray");
     let temp = [];
-    
+   
     temp.push(nameToNum[document.getElementById(newOrder[0]).textContent]);
     temp.push(nameToNum[document.getElementById(newOrder[1]).textContent]);
     temp.push(nameToNum[document.getElementById(newOrder[2]).textContent]);
     temp.push(nameToNum[document.getElementById(newOrder[3]).textContent]);
     temp.push(nameToNum[document.getElementById(newOrder[4]).textContent]);
     temp.push(nameToNum[document.getElementById(newOrder[5]).textContent]);
-    console.log(temp)
+    // console.log(temp)
 
-    chrome.storage.sync.set({ orderSetting: newOrder }, () => {
+    chrome.storage.sync.set({ orderSetting: temp }, () => {
         // Update status to let user know options were saved.
         let status = document.getElementById('status');
         status.textContent = 'Options saved.';
@@ -65,13 +65,13 @@ function resetDefault() {
 function restoreOptions() {
     // chrome.storage.sync.get("orderSetting", (items) => {
     chrome.storage.sync.get({ orderSetting: defaultOrder }, (items) => {
-        console.log(items.orderSetting);
-        document.getElementById("0").textContent = numToName[items.orderSetting[0]];
-        document.getElementById("1").textContent = numToName[items.orderSetting[1]];
-        document.getElementById("2").textContent = numToName[items.orderSetting[2]];
-        document.getElementById("3").textContent = numToName[items.orderSetting[3]];
-        document.getElementById("4").textContent = numToName[items.orderSetting[4]];
-        document.getElementById("5").textContent = numToName[items.orderSetting[5]];
+        // console.log(items.orderSetting);
+        document.getElementById("a").textContent = numToName[items.orderSetting[0]];
+        document.getElementById("b").textContent = numToName[items.orderSetting[1]];
+        document.getElementById("c").textContent = numToName[items.orderSetting[2]];
+        document.getElementById("d").textContent = numToName[items.orderSetting[3]];
+        document.getElementById("e").textContent = numToName[items.orderSetting[4]];
+        document.getElementById("f").textContent = numToName[items.orderSetting[5]];
     });
 }
 document.addEventListener('DOMContentLoaded', restoreOptions);
