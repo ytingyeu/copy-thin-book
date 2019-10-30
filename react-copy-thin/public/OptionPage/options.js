@@ -46,7 +46,7 @@ function saveOptions() {
     temp.push(nameToNum[document.getElementById(newOrder[5]).textContent]);
     // console.log(temp)
 
-    chrome.storage.sync.set({ orderSetting: temp }, () => {
+    chrome.storage.sync.set({ "orderSetting": temp }, () => {
         // Update status to let user know options were saved.
         let status = document.getElementById('status');
         status.textContent = 'Options saved.';
@@ -64,7 +64,7 @@ function resetDefault() {
 
 function restoreOptions() {
     // chrome.storage.sync.get("orderSetting", (items) => {
-    chrome.storage.sync.get({ orderSetting: defaultOrder }, (items) => {
+    chrome.storage.sync.get({ "orderSetting": defaultOrder }, (items) => {
         // console.log(items.orderSetting);
         document.getElementById("a").textContent = numToName[items.orderSetting[0]];
         document.getElementById("b").textContent = numToName[items.orderSetting[1]];

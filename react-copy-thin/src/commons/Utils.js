@@ -15,13 +15,11 @@ export function getCurrentTab(callback) {
 }
 
 export function copyToClipboard(data) {
-    bg.console.log("copyToClipboard");
+    bg.console.log("copyToClipboard");    
 
-    let strBuilder = "";
-
-    chrome.storage.sync.get("orderSetting", options => {
+    chrome.storage.sync.get(["orderSetting"], options => {
         const { orderSetting } = options;
-
+        let strBuilder = "";
         // bg.console.log(orderSetting);
         // bg.console.log(data);
 
@@ -33,8 +31,6 @@ export function copyToClipboard(data) {
                 strBuilder = strBuilder + "\t";
             }
         });
-
-        bg.console.log(strBuilder);
 
         // create a new element and append it to DOM
         const el = document.createElement("textarea");
