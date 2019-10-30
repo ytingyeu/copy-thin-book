@@ -4,7 +4,7 @@ $("#sortable").sortable({
 
 const defaultOrder = ["0","1","2","3","4","5"];
 
-let defaultHtml = 
+const defaultHtml = 
 '<li class="list-group-item ui-sortable-handle" id="0">title</li>' +
 '<li class="list-group-item ui-sortable-handle" id="1">author</li>' +
 '<li class="list-group-item ui-sortable-handle" id="2">circle</li>' +
@@ -46,10 +46,7 @@ function saveOptions() {
     temp.push(nameToNum[document.getElementById(newOrder[5]).textContent]);
     console.log(temp)
 
-    chrome.storage.sync.set({
-        orderSetting: newOrder,
-        // likesColor: likesColor
-    }, function () {
+    chrome.storage.sync.set({ orderSetting: newOrder }, () => {
         // Update status to let user know options were saved.
         let status = document.getElementById('status');
         status.textContent = 'Options saved.';
@@ -65,13 +62,9 @@ function resetDefault() {
 
 }
 
-// Restores select box and checkbox state using the preferences
-// stored in chrome.storage.
 function restoreOptions() {
-    // Use default value color = 'red' and likesColor = true.
-    chrome.storage.sync.get({
-        orderSetting: defaultOrder
-    }, function (items) {
+    // chrome.storage.sync.get("orderSetting", (items) => {
+    chrome.storage.sync.get({ orderSetting: defaultOrder }, (items) => {
         console.log(items.orderSetting);
         document.getElementById("0").textContent = numToName[items.orderSetting[0]];
         document.getElementById("1").textContent = numToName[items.orderSetting[1]];

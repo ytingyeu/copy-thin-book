@@ -14,8 +14,8 @@ class MainPage extends React.Component {
 
     this.state = {
       shopName: "",
-      tab: null,
-      status: ""
+      url: "",
+      status: ""      
     }
   }
 
@@ -45,19 +45,22 @@ class MainPage extends React.Component {
 
       const [bookTitle, authorName, circleName, priceStr, genre] = await Promise.all(promiseList);
 
+     
       // clear price info, add tax
       if (priceStr !== "price_not_found") {
         price = parseInt(priceStr.match(/[0-9 , \.]+/g)[0].replace(",", ""));
 
-        // Toranoana shows price before tax originally
-        if (shopName === "toranoana") {
+        // Toranoana shows price before tax
+        if (this.state.shopName === "toranoana") {
           price = Math.round(price * taxRate);
         }
+
       } else {
         price = priceStr;
       }
 
-      bg.console.log([bookTitle, authorName, circleName, price, genre]);
+      // bg.console.log([bookTitle, authorName, circleName, price, genre]);
+      copyToClipboard([bookTitle, authorName, circleName, price, genre, this.state.tab.url]);
 
       this.setState({ status: "Success!" })
 
