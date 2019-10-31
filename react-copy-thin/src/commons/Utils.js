@@ -18,10 +18,16 @@ export function copyToClipboard(data) {
     bg.console.log("copyToClipboard");    
 
     chrome.storage.sync.get(["orderSetting"], options => {
-        const { orderSetting } = options;
+                
+        let { orderSetting } = options;
         let strBuilder = "";
         // bg.console.log(orderSetting);
         // bg.console.log(data);
+
+
+        if(!orderSetting) {
+            orderSetting = [...Array(data.length).keys()]
+        }
 
         orderSetting.forEach((val, idx) => {
             
