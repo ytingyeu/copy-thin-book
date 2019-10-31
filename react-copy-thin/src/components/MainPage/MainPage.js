@@ -26,7 +26,8 @@ class MainPage extends React.Component {
 
             if (tab.url.includes("toranoana")) {
                 this.setState({ shopName: "toranoana" });
-            } else {
+            } 
+            else if (tab.url.includes("melonbooks")) {
                 this.setState({ shopName: "melonbooks" });
             }
         });
@@ -77,7 +78,6 @@ class MainPage extends React.Component {
             setTimeout(() => {
                 this.setState({ status: "" });
             }, 2000);
-
         } catch (err) {
             bg.console.error(err);
         }
