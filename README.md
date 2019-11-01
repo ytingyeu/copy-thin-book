@@ -26,7 +26,7 @@ It will dispaly a success message once the copy is done.
 **Notice: this extension is unlisted on Chrome Web Store since it hasn't been fully tested yet.**
 
 ## For Developers
-There are two project folder on this repository.
+There are two project folders on this repository.
 `pure-js` is developed without any framework, while `react-copy-thin` is using React.
 
 **The depolyed build on Chrome Web Store is based on `react-copy-thin`.**
