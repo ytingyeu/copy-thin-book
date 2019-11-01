@@ -30,5 +30,5 @@ or via [Chrome Web Store](https://chrome.google.com/webstore/detail/copy-thin-bo
 **Notice: this extension is unlisted on Chrome Web Store since it hasn't been fully tested yet.**
 
 ### How to use?
-Under a page of a certain book, click the icon and then click the popup button `Copy`. 
-The popup window should be closed once the copy successes.
+Under a page of a certain book, click the icon and then click the popup copy icon. 
+It will dispaly a success message once the copy is done.
