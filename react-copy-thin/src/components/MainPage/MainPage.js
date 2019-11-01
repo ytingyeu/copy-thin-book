@@ -26,16 +26,55 @@ class MainPage extends React.Component {
 
             if (tab.url.includes("toranoana")) {
                 this.setState({ shopName: "toranoana" });
-            } 
-            else if (tab.url.includes("melonbooks")) {
+            } else if (tab.url.includes("melonbooks")) {
                 this.setState({ shopName: "melonbooks" });
             }
         });
     }
 
+    clearInfo = (circleHtml, priceStr) => {
+        let circleName, price;
+
+        // clear circle info from Melonbooks
+        if (this.state.shopName === "melonbooks") {
+            if (circleHtml !== "price_not_found") {
+                const regex = /(.*)(\&nbsp\;.*\:\d*\))/gm;
+                let matches;
+
+                while ((matches = regex.exec(circleHtml)) !== null) {
+                    // This is necessary to avoid infinite loops with zero-width matches
+                    if (matches.index === regex.lastIndex) {
+                        regex.lastIndex++;
+                    }
+                    circleName = matches[1];
+                }
+            }
+        } 
+        else {
+            circleName = circleHtml;
+        }
+
+        // clear price info, add tax
+        if (priceStr !== "price_not_found") {
+            price = parseInt(
+                priceStr.match(/[0-9 , \.]+/g)[0].replace(",", "")
+            );
+
+            // Toranoana shows price before tax
+            if (this.state.shopName === "toranoana") {
+                price = Math.round(price * taxRate);
+            }
+        } else {
+            price = priceStr;
+        }
+
+        return [circleName, price];
+    };
+
     handleCopy = async () => {
         bg.console.log("handleCopy()");
 
+        let circleName;
         let price;
         let queryList = createQueryStr(this.state.shopName);
         let promiseList = createQueryPromises(this.state.tab, queryList);
@@ -44,26 +83,15 @@ class MainPage extends React.Component {
             const [
                 bookTitle,
                 authorName,
-                circleName,
+                circleHtml,
                 priceStr,
                 genre
             ] = await Promise.all(promiseList);
 
-            // clear price info, add tax
-            if (priceStr !== "price_not_found") {
-                price = parseInt(
-                    priceStr.match(/[0-9 , \.]+/g)[0].replace(",", "")
-                );
+            [circleName, price] = this.clearInfo(circleHtml, priceStr);
 
-                // Toranoana shows price before tax
-                if (this.state.shopName === "toranoana") {
-                    price = Math.round(price * taxRate);
-                }
-            } else {
-                price = priceStr;
-            }
-
-            // bg.console.log([bookTitle, authorName, circleName, price, genre]);
+            bg.console.log([bookTitle, authorName, circleName, price, genre, this.state.tab.url]);
+            
             copyToClipboard([
                 bookTitle,
                 authorName,
