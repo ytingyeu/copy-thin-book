@@ -2,7 +2,7 @@
 
 ## Description
 Feel tired to copy and paste every single attribute of a thin book manually 
-when making request for shopping agent service or recording what you've bought?
+when making requests to shopping agent service or recording what you've bought?
 
 **copy-thin-book** is a Chrome Extension which finds out the title, auther name, circle name, genre, 
 price after tax, and URL under the page of a certain Doujinshi on Toranoana and Melonbooks. 
@@ -17,7 +17,7 @@ Currently this tool only supports:
 
 ## How to use?
 
-Install the extenvion on
+Install the extension on
 [Chrome Web Store](https://chrome.google.com/webstore/detail/copy-thin-book/lpioakbgahcliooefppgddhbdgiapcak)
 
 Under a page of a certain book, click the extension icon and then click the popup copy icon. 
