@@ -1,0 +1,22 @@
+
+.setting-container {
+    width: 500px;
+    margin: 2em;
+}
+
+.list-group {
+    margin-bottom: 1em;
+}
+
+.list-group-item {
+    border: 1px black solid;
+    text-transform: uppercase;
+}
+
+.drop-placeholder {
+    background-color: lightgray;
+    height: 3.5em;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    line-height: 1.2em;
+}
