@@ -8,7 +8,6 @@
         "https://ecs.toranoana.jp/*",
         "https://ec.toranoana.jp/*",
         "https://www.melonbooks.co.jp/*",
-        "activeTab",
         "declarativeContent",
         "clipboardWrite",        
         "storage"
