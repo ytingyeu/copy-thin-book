@@ -3,14 +3,13 @@
 
     "name": "copy-thin-book",
     "description": "Copy the information of a Doujinshi from online Doujinshi shop.",
-    "version": "2.0.2",
+    "version": "2.1.1",
     "permissions": [
         "https://ecs.toranoana.jp/*",
         "https://ec.toranoana.jp/*",
         "https://www.melonbooks.co.jp/*",
-        "activeTab",
         "declarativeContent",
-        "clipboardWrite",        
+        "clipboardWrite",
         "storage"
     ],
 

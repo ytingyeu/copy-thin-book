@@ -1,5 +1,5 @@
 /* global chrome */
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { MDBBtn, MDBIcon } from "mdbreact";
 import { getCurrentTab, copyToClipboard } from "commons/Utils";
 import { createQueryStr, createQueryPromises } from "commons/QueryFuncs";
@@ -7,36 +7,33 @@ import { createQueryStr, createQueryPromises } from "commons/QueryFuncs";
 const bg = chrome.extension.getBackgroundPage();
 const taxRate = 1.1;
 
-class MainPage extends React.Component {
-    constructor(props) {
-        super(props);
+function MainPage() {
+    const [shopName, setShopName] = useState("");
+    const [url, setUrl] = useState("");
+    const [status, setStatus] = useState("");
+    const [tab, setTab] = useState(null);
 
-        this.state = {
-            shopName: "",
-            url: "",
-            status: ""
-        };
-    }
-
-    componentDidMount() {
-        getCurrentTab(tab => {
+    useEffect(() => {
+        getCurrentTab((tab) => {
             bg.console.log(tab);
 
-            this.setState({ tab: tab });
+            setTab(tab);
 
             if (tab.url.includes("toranoana")) {
-                this.setState({ shopName: "toranoana" });
+                setShopName("toranoana");
+                setUrl(tab.url);
             } else if (tab.url.includes("melonbooks")) {
-                this.setState({ shopName: "melonbooks" });
+                setShopName("melonbooks");
+                setUrl(tab.url);
             }
         });
-    }
+    }, []);
 
-    clearInfo = (circleHtml, priceStr) => {
+    const clearInfo = (circleHtml, priceStr) => {
         let circleName, price;
 
         // clear circle info from Melonbooks
-        if (this.state.shopName === "melonbooks") {
+        if (shopName === "melonbooks") {
             if (circleHtml !== "price_not_found") {
                 const regex = /(.*)(\&nbsp\;.*\:\d*\))/gm;
                 let matches;
@@ -49,8 +46,7 @@ class MainPage extends React.Component {
                     circleName = matches[1];
                 }
             }
-        } 
-        else {
+        } else {
             circleName = circleHtml;
         }
 
@@ -61,7 +57,7 @@ class MainPage extends React.Component {
             );
 
             // Toranoana shows price before tax
-            if (this.state.shopName === "toranoana") {
+            if (shopName === "toranoana") {
                 price = Math.round(price * taxRate);
             }
         } else {
@@ -71,13 +67,13 @@ class MainPage extends React.Component {
         return [circleName, price];
     };
 
-    handleCopy = async () => {
+    const handleCopy = async () => {
         bg.console.log("handleCopy()");
 
         let circleName;
         let price;
-        let queryList = createQueryStr(this.state.shopName);
-        let promiseList = createQueryPromises(this.state.tab, queryList);
+        let queryList = createQueryStr(shopName);
+        let promiseList = createQueryPromises(tab, queryList);
 
         try {
             const [
@@ -85,48 +81,53 @@ class MainPage extends React.Component {
                 authorName,
                 circleHtml,
                 priceStr,
-                genre
+                genre,
             ] = await Promise.all(promiseList);
 
-            [circleName, price] = this.clearInfo(circleHtml, priceStr);
+            [circleName, price] = clearInfo(circleHtml, priceStr);
 
-            bg.console.log([bookTitle, authorName, circleName, price, genre, this.state.tab.url]);
-            
+            bg.console.log([
+                bookTitle,
+                authorName,
+                circleName,
+                price,
+                genre,
+                url,
+            ]);
+
             copyToClipboard([
                 bookTitle,
                 authorName,
                 circleName,
                 price,
                 genre,
-                this.state.tab.url
+                url,
             ]);
 
-            this.setState({ status: "Success!" });
+            setStatus("Success!");
 
             setTimeout(() => {
-                this.setState({ status: "" });
+                setStatus("");
             }, 2000);
         } catch (err) {
             bg.console.error(err);
         }
     };
 
-    render() {
-        return (
-            <div>
-                <MDBBtn gradient="blue">
-                    <MDBIcon
-                        icon="copy"
-                        size="5x"
-                        onClick={() => {
-                            this.handleCopy();
-                        }}
-                    />
-                </MDBBtn>
-                <p id="status">{this.state.status}</p>
-            </div>
-        );
-    }
+    return (
+        <div>
+            <MDBBtn gradient="blue">
+                <MDBIcon
+                    icon="copy"
+                    size="5x"
+                    onClick={() => {
+                        handleCopy();
+                    }}
+                />
+            </MDBBtn>
+            <p id="status">{status}</p>
+        </div>
+    );
 }
 
 export default MainPage;
