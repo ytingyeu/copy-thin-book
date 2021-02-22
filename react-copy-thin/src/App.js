@@ -8,9 +8,6 @@ import "./App.css";
 
 const bg = chrome.extension.getBackgroundPage();
 
-const manifestData = chrome.runtime.getManifest();
-chrome.storage.sync.set({ appVersion: manifestData.version });
-
 function App() {
     const openOptions = () => {
         if (chrome.runtime.openOptionsPage) {

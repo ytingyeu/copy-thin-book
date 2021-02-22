@@ -80,9 +80,8 @@ function restoreOptions() {
     });
 }
 
-chrome.storage.sync.get(['appVersion'], result => {
-    document.getElementById("app-version").innerText = result.appVersion;
-});
+const manifestData = chrome.runtime.getManifest();
+document.getElementById("app-version").innerText = manifestData.version;
 
 document.addEventListener("DOMContentLoaded", restoreOptions);
 document.getElementById("save").addEventListener("click", saveOptions);
