@@ -5,9 +5,10 @@
     "description": "Copy the information of a Doujinshi from online Doujinshi shop.",
     "version": "2.1.0",
     "permissions": [
-        "https://ecs.toranoana.jp/tora/ec/item/*",
-        "https://ec.toranoana.jp/tora_r/ec/item/*",
-        "https://www.melonbooks.co.jp/detail/detail.php?product_id=*",
+        "https://ecs.toranoana.jp/*",
+        "https://ec.toranoana.jp/*",
+        "https://www.melonbooks.co.jp/*",
+        "declarativeContent",
         "clipboardWrite",        
         "storage"
     ],
