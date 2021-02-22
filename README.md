@@ -23,19 +23,15 @@ Install the extension on
 Under a page of a certain book, click the extension icon and then click the popup copy icon. 
 It will dispaly a success message once the copy is done.
 
-**Notice: this extension is unlisted on Chrome Web Store since it hasn't been fully tested yet.**
-
 ## For Developers
-There are two project folders on this repository.
-`pure-js` is developed without any framework, while `react-copy-thin` is using React.
 
-**The depolyed build on Chrome Web Store is based on `react-copy-thin`.**
-
-To install unpacked extension, you can:
+To install unpacked extension, you do:
 1. Download and extract the project
-2. On Chrome, access `chrome://extensions` and turn on Developer mode.
-3. 
-    - For `pure-js`, drag & drop `pure-js` folder into the browser.
-    - For `react-copy-thin`, under the root of `react-copy-thin`, execute `npm run build` to build the applicaiotn. Then drag & drop the `build` folder into `chrome://extensions.
+2. Under the root of `react-copy-thin`, execute `npm run build` to build.
+3. On Chrome, access `chrome://extensions` and turn on Developer mode.
+4. Drag & drop the `build` folder into `chrome://extensions.
+5. Click refresh icon to reload the extension once the source code is modified.
 
-Click refresh icon to reload the extension once the source code is modified.
+To see any change of the code, you have to build and reload the extension every time. Please let me know if there is anyway to avoid this heavy process and can preview the changes of React.
+
+The option page is in `public/OptionPage`. I have no idea how to let Chrome read option page if it's a React App instead of a HTML file. So the option page is written seperately without React.
