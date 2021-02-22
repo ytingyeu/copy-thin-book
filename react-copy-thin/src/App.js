@@ -1,12 +1,15 @@
 /* global chrome */
 import React from "react";
-import { MDBBtn, MDBIcon } from "mdbreact";
+import { MDBIcon } from "mdbreact";
 
 import MainPage from "components/MainPage/MainPage";
 
 import "./App.css";
 
 const bg = chrome.extension.getBackgroundPage();
+
+const manifestData = chrome.runtime.getManifest();
+chrome.storage.sync.set({ appVersion: manifestData.version });
 
 function App() {
     const openOptions = () => {
