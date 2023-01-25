@@ -6,7 +6,7 @@ import MainPage from "components/MainPage/MainPage";
 
 import "./App.css";
 
-const bg = chrome.extension.getBackgroundPage();
+//const bg = chrome.extension.getBackgroundPage();
 
 function App() {
     const openOptions = () => {
@@ -16,7 +16,7 @@ function App() {
             window.open(chrome.runtime.getURL("options.html"));
         }
 
-        bg.console.log(chrome.runtime.openOptionsPage);
+        //bg.console.log(chrome.runtime.openOptionsPage);
     };
 
     return (
