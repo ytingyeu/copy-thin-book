@@ -1,6 +1,6 @@
 {
   "name": "react-copy-thin",
-  "version": "2.1.1",
+  "version": "2.2.0",
   "private": true,
   "dependencies": {
     "mdbreact": "^4.21.1",
@@ -10,7 +10,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "set \"INLINE_RUNTIME_CHUNK=false\" && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
