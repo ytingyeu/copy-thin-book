@@ -1,7 +1,7 @@
 /* global chrome */
 
 // TODO: Inspect View always turns to inactive after the extension is closed.
-// Maybe a bug, maybe not https://bugs.chromium.org/p/chromium/issues/detail?id=1271154
+// and cannot be open again until reload
 chrome.runtime.onInstalled.addListener(() => {
   chrome.declarativeContent.onPageChanged.removeRules(undefined, () => {
     chrome.declarativeContent.onPageChanged.addRules([
