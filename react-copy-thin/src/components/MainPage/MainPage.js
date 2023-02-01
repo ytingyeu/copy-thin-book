@@ -30,26 +30,44 @@ function MainPage() {
     });
   }, []);
 
-  const clearInfo = (circleHtml, priceStr) => {
-    let circleName, price;
+  // const clearInfo = (circleHtml, priceStr) => {
+  //   let circleName, price;
 
-    // clear circle info from Melonbooks
-    if (shopName === "melonbooks") {
-      if (circleHtml !== "price_not_found") {
-        const regex = /(.*)(\&nbsp\;.*\:\d*\))/gm;
-        let matches;
+  //   // clear circle info from Melonbooks
+  //   if (shopName === "melonbooks") {
+  //     if (circleHtml !== "price_not_found") {
+  //       const regex = /(.*)(\&nbsp\;.*\:\d*\))/gm;
+  //       let matches;
 
-        while ((matches = regex.exec(circleHtml)) !== null) {
-          // This is necessary to avoid infinite loops with zero-width matches
-          if (matches.index === regex.lastIndex) {
-            regex.lastIndex++;
-          }
-          circleName = matches[1];
-        }
-      }
-    } else {
-      circleName = circleHtml;
-    }
+  //       while ((matches = regex.exec(circleHtml)) !== null) {
+  //         // This is necessary to avoid infinite loops with zero-width matches
+  //         if (matches.index === regex.lastIndex) {
+  //           regex.lastIndex++;
+  //         }
+  //         circleName = matches[1];
+  //       }
+  //     }
+  //   } else {
+  //     circleName = circleHtml;
+  //   }
+
+  //   // clear price info, add tax
+  //   if (priceStr !== "price_not_found") {
+  //     price = parseInt(priceStr.match(/[0-9 , \.]+/g)[0].replace(",", ""));
+
+  //     // Toranoana shows price before tax
+  //     if (shopName === "toranoana") {
+  //       price = Math.round(price * taxRate);
+  //     }
+  //   } else {
+  //     price = priceStr;
+  //   }
+
+  //   return [circleName, price];
+  // };
+
+  const clearInfo = (priceStr) => {
+    let price;
 
     // clear price info, add tax
     if (priceStr !== "price_not_found") {
@@ -63,7 +81,7 @@ function MainPage() {
       price = priceStr;
     }
 
-    return [circleName, price];
+    return price;
   };
 
   const handleCopy = async () => {
@@ -75,21 +93,14 @@ function MainPage() {
     let promiseList = createQueryPromises(tab, shopName);
 
     try {
-      const [bookTitle, authorName, circleHtml, priceStr, genre] =
+      const [bookTitle, authorName, circle, priceStr, genre] =
         await Promise.all(promiseList);
 
-      [circleName, price] = clearInfo(circleHtml, priceStr);
+      price = clearInfo(priceStr);
 
-      console.log([
-          bookTitle,
-          authorName,
-          circleName,
-          price,
-          genre,
-          url,
-      ]);
+      console.log([bookTitle, authorName, circle, price, genre, url]);
 
-      copyToClipboard([bookTitle, authorName, circleName, price, genre, url]);
+      copyToClipboard([bookTitle, authorName, circle, price, genre, url]);
 
       setStatus("Success!");
 

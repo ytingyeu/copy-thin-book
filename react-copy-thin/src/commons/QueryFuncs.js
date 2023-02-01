@@ -20,6 +20,7 @@ const queryFuncDict = {
     queryGenre: () =>
       document.querySelector(".js-product-detail-spec-genre").innerText,
   },
+  // TODO: update query string for melonbooks
   melonbooks: {
     queryTitle: () =>
       document.querySelectorAll("table.stripe tr.odd td")[0].innerText,
@@ -71,7 +72,7 @@ export function createQueryPromises(tab, shopName) {
         if (results[0] == null) {
           resolve("author_not_found");
         } else {
-          resolve(results[0]);
+          resolve(results[0].result);
         }
       }
     );
@@ -89,7 +90,7 @@ export function createQueryPromises(tab, shopName) {
         if (results[0] == null) {
           resolve("circle_not_found");
         } else {
-          resolve(results[0]);
+          resolve(results[0].result);
         }
       }
     );
@@ -107,7 +108,7 @@ export function createQueryPromises(tab, shopName) {
         if (results[0] == null) {
           resolve("price_not_found");
         } else {
-          resolve(results[0]);
+          resolve(results[0].result);
         }
       }
     );
@@ -125,7 +126,7 @@ export function createQueryPromises(tab, shopName) {
         if (results[0] == null) {
           resolve("genre_not_found");
         } else {
-          resolve(results[0]);
+          resolve(results[0].result);
         }
       }
     );
