@@ -78,15 +78,15 @@ function MainPage() {
       const [bookTitle, authorName, circleHtml, priceStr, genre] =
         await Promise.all(promiseList);
 
-      //[circleName, price] = clearInfo(circleHtml, priceStr);
+      [circleName, price] = clearInfo(circleHtml, priceStr);
 
       console.log([
           bookTitle,
-          // authorName,
-          // circleName,
-          // price,
-          // genre,
-          // url,
+          authorName,
+          circleName,
+          price,
+          genre,
+          url,
       ]);
 
       copyToClipboard([bookTitle, authorName, circleName, price, genre, url]);
