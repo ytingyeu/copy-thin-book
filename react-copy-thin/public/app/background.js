@@ -28,7 +28,7 @@ chrome.runtime.onInstalled.addListener(function (details) {
                         },
                     }),
                 ],
-                actions: [new chrome.declarativeContent.ShowPageAction()],
+                actions: [new chrome.declarativeContent.ShowAction()],
             },
         ]);
     });
