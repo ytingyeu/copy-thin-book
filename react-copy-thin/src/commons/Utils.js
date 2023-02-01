@@ -1,7 +1,5 @@
 /* global chrome */
 
-//const bg = chrome.extension.getBackgroundPage();
-
 export async function getCurrentTab() {
   let queryOptions = { active: true, lastFocusedWindow: true };
   // `tab` will either be a `tabs.Tab` instance or `undefined`.
@@ -10,13 +8,9 @@ export async function getCurrentTab() {
 }
 
 export function copyToClipboard(data) {
-  //bg.console.log("copyToClipboard");
-
   chrome.storage.sync.get(["orderSetting"], (options) => {
     let { orderSetting } = options;
     let strBuilder = "";
-    // bg.console.log(orderSetting);
-    // bg.console.log(data);
 
     if (!orderSetting) {
       orderSetting = [...Array(data.length).keys()];
@@ -33,15 +27,12 @@ export function copyToClipboard(data) {
     // create a new element and append it to DOM
     const copyDummyEl = document.createElement("textarea");
     copyDummyEl.value = strBuilder;
-    //document.body.appendChild(el);
+
+    // select and copy to clipboard
     copyDummyEl.select();
     navigator.clipboard.writeText(copyDummyEl.value);
 
-    // select and execute copy
-    //el.select();
-    //document.execCommand("copy");
-
     // remove useless element
-    document.body.removeChild(copyDummyEl);
+    copyDummyEl.remove();
   });
 }
