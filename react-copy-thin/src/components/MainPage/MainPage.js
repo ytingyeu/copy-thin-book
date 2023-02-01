@@ -71,25 +71,23 @@ function MainPage() {
 
     let circleName;
     let price;
-    let queryList = createQueryStr(shopName);
-    let promiseList = createQueryPromises(tab, queryList);
+    //let queryList = createQueryStr(shopName);
+    let promiseList = createQueryPromises(tab, shopName);
 
     try {
       const [bookTitle, authorName, circleHtml, priceStr, genre] =
         await Promise.all(promiseList);
 
-      console.log(bookTitle);
+      //[circleName, price] = clearInfo(circleHtml, priceStr);
 
-      [circleName, price] = clearInfo(circleHtml, priceStr);
-
-      // bg.console.log([
-      //     bookTitle,
-      //     authorName,
-      //     circleName,
-      //     price,
-      //     genre,
-      //     url,
-      // ]);
+      console.log([
+          bookTitle,
+          // authorName,
+          // circleName,
+          // price,
+          // genre,
+          // url,
+      ]);
 
       copyToClipboard([bookTitle, authorName, circleName, price, genre, url]);
 

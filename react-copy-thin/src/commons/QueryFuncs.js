@@ -49,88 +49,96 @@ export function createQueryPromises(tab, shopName) {
     chrome.scripting.executeScript(
       {
         target: { tabId: tab.id },
-        func: queryFuncDict[shopName].queryTitle,
+        func: () => {
+          let res = document
+          .querySelector("meta[property='og:title']")
+          .getAttribute("content");
+
+          return res;
+        },
       },
       function (results) {
+        console.log(results);
+
         if (results[0] == null) {
           resolve("title_not_found");
         } else {
-          resolve(results[0]);
+          resolve(results[0].result);
         }
       }
     );
   });
 
-  const getAuthorName = new Promise(function (resolve) {
-    chrome.scripting.executeScript(
-      {
-        target: { tabId: tab.id },
-        func: queryFuncDict[shopName].queryAuthor,
-      },
-      function (results) {
-        if (results[0] == null) {
-          resolve("author_not_found");
-        } else {
-          resolve(results[0]);
-        }
-      }
-    );
-  });
+  // const getAuthorName = new Promise(function (resolve) {
+  //   chrome.scripting.executeScript(
+  //     {
+  //       target: { tabId: tab.id },
+  //       func: queryFuncDict[shopName].queryAuthor,
+  //     },
+  //     function (results) {
+  //       if (results[0] == null) {
+  //         resolve("author_not_found");
+  //       } else {
+  //         resolve(results[0]);
+  //       }
+  //     }
+  //   );
+  // });
 
-  const getCircleName = new Promise(function (resolve) {
-    chrome.scripting.executeScript(
-      {
-        target: { tabId: tab.id },
-        func: queryFuncDict[shopName].queryCircle,
-      },
-      function (results) {
-        if (results[0] == null) {
-          resolve("circle_not_found");
-        } else {
-          resolve(results[0]);
-        }
-      }
-    );
-  });
+  // const getCircleName = new Promise(function (resolve) {
+  //   chrome.scripting.executeScript(
+  //     {
+  //       target: { tabId: tab.id },
+  //       func: queryFuncDict[shopName].queryCircle,
+  //     },
+  //     function (results) {
+  //       if (results[0] == null) {
+  //         resolve("circle_not_found");
+  //       } else {
+  //         resolve(results[0]);
+  //       }
+  //     }
+  //   );
+  // });
 
-  const getPrice = new Promise(function (resolve) {
-    chrome.scripting.executeScript(
-      {
-        target: { tabId: tab.id },
-        func: queryFuncDict[shopName].queryPrice,
-      },
-      function (results) {
-        if (results[0] == null) {
-          resolve("price_not_found");
-        } else {
-          resolve(results[0]);
-        }
-      }
-    );
-  });
+  // const getPrice = new Promise(function (resolve) {
+  //   chrome.scripting.executeScript(
+  //     {
+  //       target: { tabId: tab.id },
+  //       func: queryFuncDict[shopName].queryPrice,
+  //     },
+  //     function (results) {
+  //       if (results[0] == null) {
+  //         resolve("price_not_found");
+  //       } else {
+  //         resolve(results[0]);
+  //       }
+  //     }
+  //   );
+  // });
 
-  const getGenre = new Promise(function (resolve) {
-    chrome.tabs.executeScript(
-      {
-        target: { tabId: tab.id },
-        func: queryFuncDict[shopName].queryGenre,
-      },
-      function (results) {
-        if (results[0] == null) {
-          resolve("genre_not_found");
-        } else {
-          resolve(results[0]);
-        }
-      }
-    );
-  });
+  // const getGenre = new Promise(function (resolve) {
+  //   chrome.tabs.executeScript(
+  //     {
+  //       target: { tabId: tab.id },
+  //       func: queryFuncDict[shopName].queryGenre,
+  //     },
+  //     function (results) {
+  //       if (results[0] == null) {
+  //         resolve("genre_not_found");
+  //       } else {
+  //         resolve(results[0]);
+  //       }
+  //     }
+  //   );
+  // });
 
   const promiseList = [
     getTitle,
-    getAuthorName,
-    getCircleName,
-    getPrice,
-    getGenre,
+    // getAuthorName,
+    // getCircleName,
+    // getPrice,
+    // getGenre,
   ];
 
   return promiseList;
