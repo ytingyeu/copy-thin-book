@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { MDBBtn, MDBIcon } from "mdbreact";
 import { getCurrentTab, copyToClipboard } from "commons/Utils";
-import { createQueryStr, createQueryPromises } from "commons/QueryFuncs";
+import { createQueryPromises } from "commons/QueryFuncs";
 
 //const bg = chrome.extension.getBackgroundPage();
 
