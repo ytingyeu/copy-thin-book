@@ -1,129 +1,142 @@
 /* global chrome */
 
-const bg = chrome.extension.getBackgroundPage();
+const queryFuncDict = {
+  toranoana: {
+    queryTitle: () =>
+      document
+        .querySelector("meta[property='og:title']")
+        .getAttribute("content"),
 
-/* Create qurey string for different attributes and shop */
-export function createQueryStr(shopName) {
+    queryAuthor: () =>
+      document.querySelector("div.sub-name span.sub-p").innerText,
 
-  // bg.console.log("createQueryStr");
+    queryCircle: () =>
+      document.querySelector("div.sub-circle span.sub-p").innerText,
 
-  let queryStrTitle;
-  let queryStrAuthor;
-  let queryStrCircle;
-  let queryStrPrice;
-  let queryStrGenre;
+    queryPrice: () =>
+      document.querySelector("li.pricearea__price.pricearea__price--normal")
+        .innerText,
 
-  switch (shopName) {
-    case "toranoana":
-      queryStrTitle = "document.querySelector(\"meta[property='og:title']\").getAttribute('content');";
-      queryStrAuthor = "document.querySelector(\"div.sub-name span.sub-p\").innerText;";
-      queryStrCircle = "document.querySelector(\"div.sub-circle span.sub-p\").innerText;";
-      queryStrPrice = "document.querySelectorAll(\"li.pricearea__price.pricearea__price--normal\")[0].innerText;";
-      queryStrGenre = "document.querySelectorAll(\"table.detail4-spec span.infoorder-p span:not(.ico-tim)\")[1].innerText;";
-      break;
+    queryGenre: () =>
+      document.querySelector(".js-product-detail-spec-genre").innerText,
+  },
 
+  melonbooks: {
+    queryTitle: () => document.querySelector(".page-header").innerText,
 
-    case "melonbooks":
-      queryStrTitle = "document.querySelectorAll('table.stripe tr.odd td')[0].innerText;";
-      queryStrAuthor = "document.querySelectorAll('table.stripe tr.odd td a')[2].innerText;";
-      queryStrCircle = "document.querySelectorAll('table.stripe tr.odd td a')[0].innerHTML;";
-      queryStrPrice = "document.querySelector('.price').innerText";
-      queryStrGenre = "document.querySelectorAll('table.stripe tr.odd td')[3].innerText;";
-      break;
-  }
+    queryAuthor: () =>
+      document.querySelectorAll(".product_info a")[2].innerText,
 
-  let queryList = {
-    "queryTitle": queryStrTitle,
-    "queryAuthor": queryStrAuthor,
-    "queryCircle": queryStrCircle,
-    "queryPrice": queryStrPrice,
-    "queryGenre": queryStrGenre
-  }
+    queryCircle: () =>
+      document.querySelectorAll(".product_info a")[0].innerText,
 
-  return queryList;
-}
+    queryPrice: () => document.querySelector(".yen.__discount").innerText,
 
+    queryGenre: () =>
+      document.querySelectorAll(".table-wrapper th+td")[2].innerText,
+  },
+};
 
-export function createQueryPromises(tab, queryList) {
+export function createQueryPromises(tab, shopName) {
   /*=========== create promises for different fields ===========*/
 
   const getTitle = new Promise(function (resolve, reject) {
-    //bg.console.log('getTitle');
-
-    chrome.tabs.executeScript(
-      tab.id, { code: queryList["queryTitle"] },
+    chrome.scripting.executeScript(
+      {
+        target: { tabId: tab.id },
+        func: queryFuncDict[shopName].queryTitle,
+      },
       function (results) {
+        //console.log(results);
+
         if (results[0] == null) {
           resolve("title_not_found");
         } else {
-          resolve(results[0]);
+          resolve(results[0].result);
         }
-      });
+      }
+    );
   });
 
   const getAuthorName = new Promise(function (resolve) {
-    //bg.console.log('getAuthorName');
-
-    chrome.tabs.executeScript(
-      tab.id, { code: queryList["queryAuthor"] },
+    chrome.scripting.executeScript(
+      {
+        target: { tabId: tab.id },
+        func: queryFuncDict[shopName].queryAuthor,
+      },
       function (results) {
+        //console.log(results);
+
         if (results[0] == null) {
           resolve("author_not_found");
         } else {
-          resolve(results[0]);
+          resolve(results[0].result);
         }
-      });
+      }
+    );
   });
 
   const getCircleName = new Promise(function (resolve) {
-    //bg.console.log('getCircleName');
-
-    chrome.tabs.executeScript(
-      tab.id, { code: queryList["queryCircle"] },
+    chrome.scripting.executeScript(
+      {
+        target: { tabId: tab.id },
+        func: queryFuncDict[shopName].queryCircle,
+      },
       function (results) {
+        //console.log(results);
+
         if (results[0] == null) {
           resolve("circle_not_found");
         } else {
-          resolve(results[0]);
+          resolve(results[0].result);
         }
-      });
+      }
+    );
   });
 
   const getPrice = new Promise(function (resolve) {
-    //bg.console.log('getPrice');
-    chrome.tabs.executeScript(
-      tab.id, { code: queryList["queryPrice"] },
+    chrome.scripting.executeScript(
+      {
+        target: { tabId: tab.id },
+        func: queryFuncDict[shopName].queryPrice,
+      },
       function (results) {
+        //console.log(results);
+
         if (results[0] == null) {
           resolve("price_not_found");
         } else {
-          resolve(results[0]);
+          resolve(results[0].result);
         }
-      });
+      }
+    );
   });
 
   const getGenre = new Promise(function (resolve) {
-    //bg.console.log('getGenre');
-    chrome.tabs.executeScript(
-      tab.id, { code: queryList["queryGenre"] },
+    chrome.scripting.executeScript(
+      {
+        target: { tabId: tab.id },
+        func: queryFuncDict[shopName].queryGenre,
+      },
       function (results) {
+        //console.log(results);
+
         if (results[0] == null) {
           resolve("genre_not_found");
         } else {
-          resolve(results[0]);
+          resolve(results[0].result);
         }
-      });
+      }
+    );
   });
 
-  // const promiseList = {
-  //   "getTitle": getTitle, 
-  //   "getAuthorName": getAuthorName, 
-  //   "getCircleName": getCircleName,
-  //   "getPrice": getPrice, 
-  //   "getGenre": getGenre
-  // }
-
-  const promiseList = [getTitle, getAuthorName, getCircleName, getPrice, getGenre];
+  const promiseList = [
+    getTitle,
+    getAuthorName,
+    getCircleName,
+    getPrice,
+    getGenre,
+  ];
 
   return promiseList;
 }

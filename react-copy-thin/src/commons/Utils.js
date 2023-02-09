@@ -1,53 +1,93 @@
 /* global chrome */
 
-const bg = chrome.extension.getBackgroundPage();
+const DEFAULT_TAX_RATE = 10;
 
-export function getCurrentTab(callback) {
-    chrome.tabs.query(
-        {
-            active: true,
-            currentWindow: true
-        },
-        tabs => {
-            callback(tabs[0]);
-        }
-    );
+export const getStorageData = (key) =>
+  new Promise((resolve, reject) =>
+    chrome.storage.sync.get(key, (result) =>
+      chrome.runtime.lastError
+        ? reject(Error(chrome.runtime.lastError.message))
+        : resolve(result)
+    )
+  );
+
+export async function clearPriceInfo(dirtyPrice, shopName) {
+  // clear price info, add tax
+
+  let { taxRate } = await getStorageData("taxRate");
+
+  if (!taxRate) {
+    taxRate = DEFAULT_TAX_RATE;
+  }
+
+  let price;
+
+  if (dirtyPrice !== "price_not_found") {
+    price = parseInt(dirtyPrice.match(/[0-9 , \.]+/g)[0].replace(",", ""));
+
+    // Toranoana shows price before tax
+    if (shopName === "toranoana") {
+      price = Math.round(price * (1 + taxRate / 100));
+    }
+  }
+  return price;
 }
 
-export function copyToClipboard(data) {
-    bg.console.log("copyToClipboard");    
+export function clearCircleInfo(dirtyCircle, shopName) {
+  let circle = "";
 
-    chrome.storage.sync.get(["orderSetting"], options => {
-                
-        let { orderSetting } = options;
-        let strBuilder = "";
-        // bg.console.log(orderSetting);
-        // bg.console.log(data);
+  if (shopName === "melonbooks") {
+    if (dirtyCircle !== "circle_not_found") {
+      const regex = /(.*)(\s.*\:\d*\))/gm;
+      let matches;
 
-
-        if(!orderSetting) {
-            orderSetting = [...Array(data.length).keys()]
+      while ((matches = regex.exec(dirtyCircle)) !== null) {
+        // This is necessary to avoid infinite loops with zero-width matches
+        if (matches.index === regex.lastIndex) {
+          regex.lastIndex++;
         }
+        circle = matches[1];
+      }
+    }
+  } else {
+    circle = dirtyCircle;
+  }
 
-        orderSetting.forEach((val, idx) => {
-            
-            strBuilder = strBuilder + data[val];
+  return circle;
+}
 
-            if (idx !== orderSetting.length - 1) {
-                strBuilder = strBuilder + "\t";
-            }
-        });
+export async function getCurrentTab() {
+  let queryOptions = { active: true, lastFocusedWindow: true };
+  // `tab` will either be a `tabs.Tab` instance or `undefined`.
+  let [tab] = await chrome.tabs.query(queryOptions);
+  return tab;
+}
 
-        // create a new element and append it to DOM
-        const el = document.createElement("textarea");
-        el.value = strBuilder;
-        document.body.appendChild(el);
+export async function copyToClipboard(dataArray) {
+  let { orderSetting } = await getStorageData("orderSetting");
 
-        // select and execute copy
-        el.select();
-        document.execCommand("copy");
+  if (!orderSetting) {
+    orderSetting = [...Array(dataArray.length).keys()];
+  }
 
-        // remove useless element
-        document.body.removeChild(el);
-    });
+  let strBuilder = "";
+
+  orderSetting.forEach((val, idx) => {
+    strBuilder = strBuilder + dataArray[val];
+
+    if (idx !== orderSetting.length - 1) {
+      strBuilder = strBuilder + "\t";
+    }
+  });
+
+  // create a new element and append it to DOM
+  const copyDummyEl = document.createElement("textarea");
+  copyDummyEl.value = strBuilder;
+
+  // select and copy to clipboard
+  copyDummyEl.select();
+  navigator.clipboard.writeText(copyDummyEl.value);
+
+  // remove useless element
+  copyDummyEl.remove();
 }
