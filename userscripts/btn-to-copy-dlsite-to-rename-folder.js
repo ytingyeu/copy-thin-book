@@ -12,7 +12,7 @@
 (function () {
   "use strict";
 
-  const queryDliste = () => {
+  const queryDlsite = () => {
     const title = document.querySelector("#work_name").innerText;
     const circle = document.querySelector(".maker_name a").innerText;
     const rawDate = document.querySelectorAll("#work_outline a")[0].innerText;
@@ -39,11 +39,10 @@
     copyDummyEl.remove();
   };
 
-  const titleEle = document.getElementById("work_name");
-
   const copyButton = document.createElement("button");
   copyButton.innerText = "Get info to rename folder";
-  copyButton.onclick = queryDliste;
+  copyButton.onclick = queryDlsite;
 
+  const titleEle = document.getElementById("work_name");
   titleEle.insertAdjacentElement("afterend", copyButton);
 })();
