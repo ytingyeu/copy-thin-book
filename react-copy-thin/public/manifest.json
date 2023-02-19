@@ -2,12 +2,13 @@
   "manifest_version": 3,
   "name": "copy-thin-book",
   "description": "Copy the information of a Doujinshi from online Doujinshi shop.",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "permissions": ["declarativeContent", "clipboardWrite", "storage", "scripting", "tabs"],
   "host_permissions": [
     "https://ecs.toranoana.jp/*",
     "https://ec.toranoana.jp/*",
-    "https://www.melonbooks.co.jp/*"
+    "https://www.melonbooks.co.jp/*",
+    "https://www.dlsite.com/*"
   ],
   "action": {
     "default_popup": "index.html",

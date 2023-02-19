@@ -8,6 +8,7 @@ import {
   clearPriceInfo,
 } from "commons/Utils";
 import { createQueryPromises } from "commons/QueryFuncs";
+import { ShopName } from "commons/ConstantStrings";
 
 function MainPage() {
   const [shopName, setShopName] = useState("");
@@ -19,11 +20,14 @@ function MainPage() {
     getCurrentTab().then((tab) => {
       setTab(tab);
 
-      if (tab.url.includes("toranoana")) {
-        setShopName("toranoana");
+      if (tab.url.includes(ShopName.toranoana)) {
+        setShopName(ShopName.toranoana);
         setUrl(tab.url);
-      } else if (tab.url.includes("melonbooks")) {
-        setShopName("melonbooks");
+      } else if (tab.url.includes(ShopName.melonbooks)) {
+        setShopName(ShopName.melonbooks);
+        setUrl(tab.url);
+      } else if (tab.url.includes(ShopName.dlsite)) {
+        setShopName(ShopName.dlsite);
         setUrl(tab.url);
       }
     });

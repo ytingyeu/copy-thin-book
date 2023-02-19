@@ -1,7 +1,8 @@
 /* global chrome */
+import { ShopName, InfoNotFound } from "commons/ConstantStrings";
 
 const queryFuncDict = {
-  toranoana: {
+  [ShopName.toranoana]: {
     queryTitle: () =>
       document
         .querySelector("meta[property='og:title']")
@@ -21,7 +22,7 @@ const queryFuncDict = {
       document.querySelector(".js-product-detail-spec-genre").innerText,
   },
 
-  melonbooks: {
+  [ShopName.melonbooks]: {
     queryTitle: () => document.querySelector(".page-header").innerText,
 
     queryAuthor: () =>
@@ -34,6 +35,29 @@ const queryFuncDict = {
 
     queryGenre: () =>
       document.querySelectorAll(".table-wrapper th+td")[2].innerText,
+  },
+
+  [ShopName.dlsite]: {
+    queryTitle: () => document.querySelector("#work_name").innerText,
+
+    // DLSite doesn't have this field
+    queryAuthor: () => "",
+
+    queryCircle: () => document.querySelector(".maker_name a").innerText,
+
+    queryPrice: () => document.querySelector(".price").innerText,
+
+    queryGenre: () => {
+      const genreElements = document.querySelectorAll(".main_genre a");
+
+      const genreList = [];
+
+      genreElements.forEach((element) => {
+        genreList.push(element.innerText);
+      });
+
+      return genreList.toString();
+    },
   },
 };
 
@@ -50,7 +74,7 @@ export function createQueryPromises(tab, shopName) {
         //console.log(results);
 
         if (results[0] == null) {
-          resolve("title_not_found");
+          resolve(InfoNotFound.title);
         } else {
           resolve(results[0].result);
         }
@@ -68,7 +92,7 @@ export function createQueryPromises(tab, shopName) {
         //console.log(results);
 
         if (results[0] == null) {
-          resolve("author_not_found");
+          resolve(InfoNotFound.author);
         } else {
           resolve(results[0].result);
         }
@@ -86,7 +110,7 @@ export function createQueryPromises(tab, shopName) {
         //console.log(results);
 
         if (results[0] == null) {
-          resolve("circle_not_found");
+          resolve(InfoNotFound.circle);
         } else {
           resolve(results[0].result);
         }
@@ -104,7 +128,7 @@ export function createQueryPromises(tab, shopName) {
         //console.log(results);
 
         if (results[0] == null) {
-          resolve("price_not_found");
+          resolve(InfoNotFound.price);
         } else {
           resolve(results[0].result);
         }
@@ -122,7 +146,7 @@ export function createQueryPromises(tab, shopName) {
         //console.log(results);
 
         if (results[0] == null) {
-          resolve("genre_not_found");
+          resolve(InfoNotFound.genre);
         } else {
           resolve(results[0].result);
         }

@@ -1,4 +1,5 @@
 /* global chrome */
+import { InfoNotFound, ShopName } from "commons/ConstantStrings";
 
 const DEFAULT_TAX_RATE = 10;
 
@@ -22,11 +23,11 @@ export async function clearPriceInfo(dirtyPrice, shopName) {
 
   let price;
 
-  if (dirtyPrice !== "price_not_found") {
+  if (dirtyPrice !== InfoNotFound.price) {
     price = parseInt(dirtyPrice.match(/[0-9 , \.]+/g)[0].replace(",", ""));
 
     // Toranoana shows price before tax
-    if (shopName === "toranoana") {
+    if (shopName === ShopName.toranoana) {
       price = Math.round(price * (1 + taxRate / 100));
     }
   }
@@ -36,8 +37,8 @@ export async function clearPriceInfo(dirtyPrice, shopName) {
 export function clearCircleInfo(dirtyCircle, shopName) {
   let circle = "";
 
-  if (shopName === "melonbooks") {
-    if (dirtyCircle !== "circle_not_found") {
+  if (shopName === ShopName.melonbooks) {
+    if (dirtyCircle !== InfoNotFound.circle) {
       const regex = /(.*)(\s.*\:\d*\))/gm;
       let matches;
 
