@@ -25,8 +25,15 @@ chrome.runtime.onInstalled.addListener(() => {
           new chrome.declarativeContent.PageStateMatcher({
             // Melonbooks
             pageUrl: {
-              hostContains: ".melonbooks.co.jp",
+              hostContains: "melonbooks.co.jp",
               queryContains: "product_id=",
+            },
+          }),
+          new chrome.declarativeContent.PageStateMatcher({
+            // DLSite
+            pageUrl: {
+              hostContains: "dlsite.com",
+              pathContains: "maniax/work/=/product_id",
             },
           }),
         ],

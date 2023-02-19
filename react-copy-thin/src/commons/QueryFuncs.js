@@ -35,6 +35,30 @@ const queryFuncDict = {
     queryGenre: () =>
       document.querySelectorAll(".table-wrapper th+td")[2].innerText,
   },
+
+   dliste: {
+    queryTitle: () => document.querySelector("#work_name").innerText,
+
+    // DLSite doesn't have this field
+    queryAuthor: () => "",
+
+    queryCircle: () =>
+      document.querySelector(".maker_name a").innerText,
+
+    queryPrice: () => document.querySelector(".price").innerText,
+
+    queryGenre: () => {
+      let concatGenreStr = "";
+      const genreList = document.querySelectorAll(".main_genre a");
+
+      genreList.forEach(element => {
+        concatStr = `${concatStr}, ${element.innerText}`;
+      })
+      
+      return concatGenreStr;
+    }
+
+  }
 };
 
 export function createQueryPromises(tab, shopName) {
