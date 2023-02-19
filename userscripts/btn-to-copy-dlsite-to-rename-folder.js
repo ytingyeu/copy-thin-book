@@ -3,7 +3,7 @@
 // @namespace    http://tampermonkey.net/
 // @version      0.1
 // @description  Copy DLsite info to rename a folder
-// @author       You
+// @author       Tingyeu Yang (ytingyeu@asu.edu)
 // @match        https://www.dlsite.com/maniax/work/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=dlsite.com
 // @grant        none
