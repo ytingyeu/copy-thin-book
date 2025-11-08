@@ -36,10 +36,9 @@ function MainPage() {
       const [bookTitle, authorName, circle, dirtyPrice, genre] =
         await Promise.all(promiseList);
 
-      // const circle = clearCircleInfo(dirtyCircle, shopName);
       const price = await clearPriceInfo(dirtyPrice, shopName);
 
-      console.log([bookTitle, authorName, circle, price, genre, url]);
+      // console.log([bookTitle, authorName, circle, price, genre, url]);
 
       copyToClipboard([bookTitle, authorName, circle, price, genre, url]);
 

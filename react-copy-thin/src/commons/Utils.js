@@ -33,29 +33,6 @@ export async function clearPriceInfo(dirtyPrice, shopName) {
   return price;
 }
 
-export function clearCircleInfo(dirtyCircle, shopName) {
-  let circle = "";
-
-  if (shopName === "melonbooks") {
-    if (dirtyCircle !== "circle_not_found") {
-      const regex = /(.*)(\s.*\:\d*\))/gm;
-      let matches;
-
-      while ((matches = regex.exec(dirtyCircle)) !== null) {
-        // This is necessary to avoid infinite loops with zero-width matches
-        if (matches.index === regex.lastIndex) {
-          regex.lastIndex++;
-        }
-        circle = matches[1];
-      }
-    }
-  } else {
-    circle = dirtyCircle;
-  }
-
-  return circle;
-}
-
 export async function getCurrentTab() {
   let queryOptions = { active: true, lastFocusedWindow: true };
   // `tab` will either be a `tabs.Tab` instance or `undefined`.
