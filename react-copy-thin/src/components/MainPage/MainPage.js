@@ -4,7 +4,6 @@ import { MDBBtn, MDBIcon } from "mdbreact";
 import {
   getCurrentTab,
   copyToClipboard,
-  clearCircleInfo,
   clearPriceInfo,
 } from "commons/Utils";
 import { createQueryPromises } from "commons/QueryFuncs";
