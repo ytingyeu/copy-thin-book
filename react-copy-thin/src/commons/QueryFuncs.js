@@ -30,8 +30,10 @@ const queryFuncDict = {
       return Array.from(authorLinks).map(link => link.innerText.trim()).join(", ");
     },
 
-    queryCircle: () =>
-      document.querySelectorAll(".table-wrapper th+td")[0].innerText,
+    queryCircle: () => {
+      const circleText = document.querySelectorAll(".table-wrapper th+td")[0].innerText;
+      return circleText.replace(/\s*\(作品数:\d+\)/, '').replace(/&nbsp;/g, ' ').trim();
+    },
 
     queryPrice: () => document.querySelector(".price--value").innerText.trim(),
 

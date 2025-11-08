@@ -33,10 +33,10 @@ function MainPage() {
     let promiseList = createQueryPromises(tab, shopName);
 
     try {
-      const [bookTitle, authorName, dirtyCircle, dirtyPrice, genre] =
+      const [bookTitle, authorName, circle, dirtyPrice, genre] =
         await Promise.all(promiseList);
 
-      const circle = clearCircleInfo(dirtyCircle, shopName);
+      // const circle = clearCircleInfo(dirtyCircle, shopName);
       const price = await clearPriceInfo(dirtyPrice, shopName);
 
       console.log([bookTitle, authorName, circle, price, genre, url]);
