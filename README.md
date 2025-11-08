@@ -27,10 +27,11 @@ It will dispaly a success message once the copy is done.
 
 To install unpacked extension, you do:
 1. Download and extract the project
-2. Under the root of `react-copy-thin`, execute `npm run build` to build.
-3. On Chrome, access `chrome://extensions` and turn on Developer mode.
-4. Drag & drop the `build` folder into `chrome://extensions.
-5. Click refresh icon to reload the extension once the source code is modified.
+2. Under the root of `react-copy-thin`, execute `npm install`
+3. Execute `npm run build`
+4. On Chrome, access `chrome://extensions` and turn on Developer mode.
+5. Drag & drop the `build` folder into `chrome://extensions.
+6. Click refresh icon to reload the extension once the source code is modified.
 
 To see any change of the code, you have to build and reload the extension every time. Please let me know if there is anyway to avoid this heavy process and can preview the changes of React.
 

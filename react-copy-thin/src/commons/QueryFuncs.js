@@ -24,13 +24,18 @@ const queryFuncDict = {
   melonbooks: {
     queryTitle: () => document.querySelector(".page-header").innerText,
 
-    queryAuthor: () =>
-      document.querySelectorAll(".product_info a")[2].innerText,
+    queryAuthor: () => {      
+      const authorCell = document.querySelectorAll(".table-wrapper th+td")[1];
+      const authorLinks = authorCell.querySelectorAll("a:not(.favorite_author)");
+      return Array.from(authorLinks).map(link => link.innerText.trim()).join(", ");
+    },
 
-    queryCircle: () =>
-      document.querySelectorAll(".product_info a")[0].innerText,
+    queryCircle: () => {
+      const circleText = document.querySelectorAll(".table-wrapper th+td")[0].innerText;
+      return circleText.replace(/\s*\(作品数:\d+\)/, '').replace(/&nbsp;/g, ' ').trim();
+    },
 
-    queryPrice: () => document.querySelector(".yen.__discount").innerText,
+    queryPrice: () => document.querySelector(".price--value").innerText.trim(),
 
     queryGenre: () =>
       document.querySelectorAll(".table-wrapper th+td")[2].innerText,

@@ -11,3 +11,6 @@
 .DS_Store
 Thumbs.db
 desktop.ini 
+
+# Sample pages
+react-copy-thin/src/samples/*
