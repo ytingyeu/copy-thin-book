@@ -43,6 +43,7 @@ src/
 4. **Native DOM Manipulation**: Direct DOM access instead of React components
 5. **ES5 Compatible**: No ES modules to ensure Chrome extension compatibility
 6. **Simplified Build**: No build process required, ready to load directly
+7. **Asset Cleanup**: Removed unused libraries, reducing size by ~57% (5.21MB → 2.23MB)
 
 ## Installation
 
@@ -71,6 +72,10 @@ src/
 - **background.js**: Service worker that handles extension activation rules
 - **options.html/js**: Bootstrap/MDB-styled options page with jQuery UI sortable functionality
 - **styles.css**: Minimal custom styling that works with Bootstrap
-- **assets/**: Bootstrap, MDB, jQuery, and Font Awesome libraries
+- **assets/**: Streamlined assets (29 files, 2.23MB)
+  - **css/**: Bootstrap, MDB, and jQuery UI (3 files)
+  - **js/**: Core libraries only - jQuery, Bootstrap, MDB, Popper (5 files)  
+  - **font/**: Roboto font family for MDB compatibility
+  - **img/**: Chrome Web Store icon only
 
 This implementation maintains full compatibility with the original React version while removing the React dependency and simplifying the codebase.
