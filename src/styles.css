@@ -1,0 +1,27 @@
+/* Custom styles for the popup */
+body {
+    font-family: "Courier New", Courier, monospace;
+}
+
+/* Custom gradient button hover effects */
+#copy-btn:hover {
+    background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%) !important;
+    box-shadow: 0 6px 20px 0 rgba(116, 79, 168, 0.85) !important;
+    transform: translateY(-2px);
+}
+
+#copy-btn:active {
+    transform: translateY(0) !important;
+}
+
+/* Settings button hover effect */
+#options-btn:hover i {
+    color: #333 !important;
+}
+
+/* Remove Bootstrap button focus outline */
+#copy-btn:focus,
+#options-btn:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
